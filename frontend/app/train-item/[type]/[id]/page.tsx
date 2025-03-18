@@ -4,12 +4,13 @@ import Application from "@/components/components/Application";
 import {ApplicationParams} from "@/lib/utils";
 import {useState} from "react";
 import MainTrainPage from "@/components/components/Middle/MainTrainPage/MainTrainPage";
+import TrainItem from "@/components/components/Middle/TrainItem/TrainItem";
 
-export default function Home({ params }: { params: { page: number } }) {
+export default function Home({ params }: { params: { type: string, id: number } }) {
     const _params: ApplicationParams = {
-        page: MainTrainPage,
-        href: '/train',
-        pageNumber: params.page
+        page: TrainItem,
+        trainItemId: params.id,
+        trainItemType: params.type
     };
 
     const [iniParams, setIniParams] = useState(_params);

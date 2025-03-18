@@ -5,6 +5,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.site.proj.domain.TrainText;
 import ru.site.proj.domain.User;
+import ru.site.proj.dto.CombineTrainData;
+import ru.site.proj.dto.CombinedTrainDataDTO;
 import ru.site.proj.exception.NotFoundEntityException;
 import ru.site.proj.exception.UserLogInException;
 import ru.site.proj.exception.ValidationException;
@@ -33,6 +35,16 @@ public class TrainTextController {
         }
 
         return text;
+    }
+
+    @GetMapping("/text/get/item/{id}")
+    public CombinedTrainDataDTO getTrainText(@PathVariable Long id) {
+        TrainText text = trainTextService.getTrainTextById(id);
+        if (text == null) {
+            throw new NotFoundEntityException("TrainText with id " + id + " not found");
+        }
+
+        return new CombineTrainData(text);
     }
 
     @PostMapping("/create/text")

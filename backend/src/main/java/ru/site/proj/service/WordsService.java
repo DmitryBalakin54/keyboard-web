@@ -18,6 +18,10 @@ public class WordsService {
         return wordsListRepository.findById(id).get().getWords();
     }
 
+    public WordsList getWordsListById(Long id) {
+        return wordsListRepository.findById(id).get();
+    }
+
     public WordsList createWordsList(WordsList newWordsList) {
         return wordsListRepository.save(newWordsList);
     }

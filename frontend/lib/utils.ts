@@ -16,10 +16,13 @@ export interface ApplicationParams {
     userId?: number;
     otherUserId?: number;
     pageNumber?: number;
+    trainItemId?: number;
+    trainItemType?: string;
 }
 
 export interface TrainDataItem {
     id: number;
+    name: string;
     words: string[];
     text: string;
     creationTime: string;
@@ -159,3 +162,30 @@ export function formatDateTime(isoString: string): string {
 
     return `${hours}:${minutes}:${seconds} ${year}-${month}-${day}`;
 }
+
+export const toUserStr = (userId: number) => {
+    return `/profile/${userId}`;
+};
+
+export const toTrainItemStr = (id: number, type: string) => {
+    return `/train-item/${type}/${id}`;
+};
+
+export const previewData = (data: string[] | string) => {
+    if (data) {
+        let preview = "";
+        if (typeof data === "string") {
+            preview = data;
+        } else if (Array.isArray(data)) {
+            preview = data.join(" ");
+        }
+
+        if (preview.length > 400) {
+            preview = preview.substring(0, 400) + " ...";
+        }
+
+        return preview;
+    } else {
+        return "";
+    }
+};

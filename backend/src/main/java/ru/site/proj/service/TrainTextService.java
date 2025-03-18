@@ -25,4 +25,13 @@ public class TrainTextService {
 
         return text.getText();
     }
+
+    public TrainText getTrainTextById(Long id) {
+        TrainText text = trainTextRepository.findById(id).orElse(null);
+        if (text == null) {
+            return null;
+        }
+
+        return text;
+    }
 }

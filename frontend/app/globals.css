@@ -577,4 +577,38 @@ body {
   color: var(--soft-main-color);
 }
 
+.paginationTrainPage {
+  margin-top: 1rem;
+
+}
+
+.paginationTrainPage-content {
+
+}
+
+.paginationTrainPage-item a:hover {
+  background-color: var(--soft-main-color) !important;
+  color: var(--soft-white) !important;
+}
+
+
+.paginationTrainPage-item a[aria-current="page"] {
+  background-color: var(--main-color);
+  color: white;
+}
+
+.paginationTrainPage-item a.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.paginationTrainPage-item a.disabled:hover {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+
 
