@@ -1,7 +1,7 @@
 "use client";
 
 import React, {useState, useEffect, useRef, Dispatch, SetStateAction, useCallback} from 'react';
-import {ApplicationParams, formatTime, takeAmount, toastError} from "@/lib/utils";
+import {ApplicationParams, formatTime, takeAmount, toastError, TrainModes} from "@/lib/utils";
 import axios from "axios";
 
 import {
@@ -36,15 +36,26 @@ function TrainPage({params, setParams}: {params: ApplicationParams, setParams: D
     const [resultIsOpen, setResultIsOpen] = useState(false);
 
     async function downloadWords() {
-        try {
-            const response = await axios.get("/api/train/default/en");
-            setWords(response.data);
+        if (!params.trainItemId || !params.trainItemType) return;
+        let  reqUrl = "/api";
+        switch (params.trainItemType) {
+            case TrainModes.Words: reqUrl+="/words"; break;
+            case TrainModes.Text: reqUrl+="/text"; break;
+        }
+
+        reqUrl += "/get/" + params.trainItemId;
+        await axios.get(reqUrl).then((response) => {
+            if (params.trainItemType == TrainModes.Text) {
+                setWords(response.data.split(" "));
+            } else if (params.trainItemType == TrainModes.Words) {
+                setWords(response.data);
+            }
             setError(null);
-        } catch (error) {
-            console.error(error);
+        }).catch((error) => {
+            console.log(error);
             setError("Couldn't upload text. Please try again later.");
             end();
-        }
+        })
     }
 
     const updateVisibleLines = useCallback((start: number) => {
@@ -256,14 +267,15 @@ function TrainPage({params, setParams}: {params: ApplicationParams, setParams: D
                     <p>{formatTime(seconds)}</p>
                 </div>
 
-                <AlertDialog open={resultIsOpen} >
+                <AlertDialog open={resultIsOpen}>
                     <AlertDialogContent className={"result-window"}>
-                        <AlertDialogHeader>
+                        <AlertDialogHeader className={"result-window-header"}>
                             <AlertDialogTitle className={"result-title"}>Result</AlertDialogTitle>
                             <div className={"result-stat"}>
                                 <p>Accuracy: {accuracy}%</p>
                                 <p>Correct: {correctWords}</p>
                                 <p>Incorrect: {failedWords}</p>
+                                <p>Total: {failedWords + correctWords}</p>
                             </div>
                         </AlertDialogHeader>
                         <AlertDialogFooter className={"result-footer"}>

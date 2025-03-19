@@ -65,11 +65,11 @@ export function fromTrainModeString(obj: string): string {
 export function getWordWidth(word: string): number {
     const tempElement = document.createElement('span');
     document.body.appendChild(tempElement);
-    tempElement.style.visibility = 'hidden';
-    tempElement.style.whiteSpace = 'nowrap';
-    tempElement.style.fontFamily = 'Arial';
-    tempElement.style.fontSize = '1.75rem';
-    tempElement.textContent = word + " ";
+    // tempElement.style.visibility = 'hidden';
+    // tempElement.style.whiteSpace = 'nowrap';
+    // tempElement.style.fontFamily = 'Arial';
+    tempElement.style.fontSize = '1.4rem';
+    tempElement.textContent = word + "w";
     const width = tempElement.getBoundingClientRect().width;
     document.body.removeChild(tempElement);
     return width;

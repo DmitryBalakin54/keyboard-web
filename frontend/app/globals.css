@@ -440,6 +440,28 @@ body {
   align-items: center;
 }
 
+.result-window-header {
+  text-align: left;
+}
+
+.result-footer {
+  justify-content: flex-end;
+}
+
+.alert-dialog-description {
+  text-align: left;
+}
+
+.result-cancel-button {
+  justify-self: flex-end;
+  align-self: flex-end;
+}
+
+.result-cancel-button:hover {
+  background-color: var(--soft-main-color) !important;
+  color: var(--soft-white) !important;
+}
+
 .result-cancel-footer {
   align-items: center;
 }
@@ -609,6 +631,9 @@ body {
   cursor: not-allowed;
 }
 
+.item-start {
+  margin-top: 1rem;
+}
 
 
 

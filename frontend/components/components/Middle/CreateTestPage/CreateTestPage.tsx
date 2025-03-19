@@ -138,7 +138,7 @@ function MainPage({params, setParams}: {params: ApplicationParams, setParams: Di
                             />
                             <Textarea
                                 className="create-word-area"
-                                placeholder="Enter words in lowercase and punctuation separated by a space, the maximum input string length is 5000 characters"
+                                placeholder="Enter words in punctuation separated by a space, the maximum input string length is 5000 characters"
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}
                             />

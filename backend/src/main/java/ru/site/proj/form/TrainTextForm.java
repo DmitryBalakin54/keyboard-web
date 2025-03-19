@@ -13,7 +13,7 @@ public class TrainTextForm {
 
     @NotBlank
     @Size(min = 50, max = 5000, message = "Text size must be between 50 and 5000")
-    @Pattern(regexp = "^[a-z\\s.,!?-]+$", message = "Text must contain only lowercase letters and punctuation")
+    @Pattern(regexp = "^[a-zA-Z\\s.,\'\"!?-]+$", message = "Text must contain only letters and punctuation")
     private String text;
 
     @NotBlank

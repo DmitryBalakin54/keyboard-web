@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, {useState, useEffect, Dispatch, SetStateAction, useCallback} from 'react';
 import {
     ApplicationParams,
     formatDateTime,
@@ -70,6 +70,10 @@ function TrainItem({ params, setParams }: { params: ApplicationParams, setParams
         router.push(toTrainItemStr(id, type));
     };
 
+    const startTrain = useCallback((id: number, type: string) => {
+        router.push("/train/train" + toTrainItemStr(id, type));
+    }, [router])
+
 
     useEffect(() => {
         toastError(error, setError)
@@ -100,38 +104,47 @@ function TrainItem({ params, setParams }: { params: ApplicationParams, setParams
             ) : (
                 <>
                     {data ? (
-                        <ul className="train-list">
-                            <li className="train-list-item">
-                                <div className="train-list-item-header">
-                                    <a
-                                        className="train-list-item-userLogin"
-                                        onClick={() => toTrainItem(data.id, data.type)}
-                                        style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                    >
-                                        {data.name ? data.name : "Noname"}
-                                    </a>
-                                    <strong>, created by </strong>
-                                    <a
-                                        className="train-list-item-userLogin"
-                                        onClick={() => toUser(data.userId)}
-                                        style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                    >
-                                        {user ? user.login : "Unknown User"}
-                                    </a>
-                                </div>
-                                <div className="preview-data">
-                                    {previewData(data.words || data.text)}
-                                </div>
-                                <div className="train-list-item-footer">
-                                    <div>
-                                        <strong>Type:</strong> {fromTrainModeString(data.type)}
+                        <>
+                            <ul className="train-list">
+                                <li className="train-list-item">
+                                    <div className="train-list-item-header">
+                                        <a
+                                            className="train-list-item-userLogin"
+                                            onClick={() => toTrainItem(data.id, data.type)}
+                                            style={{cursor: 'pointer', textDecoration: 'underline'}}
+                                        >
+                                            {data.name ? data.name : "Noname"}
+                                        </a>
+                                        <strong>, created by </strong>
+                                        <a
+                                            className="train-list-item-userLogin"
+                                            onClick={() => toUser(data.userId)}
+                                            style={{cursor: 'pointer', textDecoration: 'underline'}}
+                                        >
+                                            {user ? user.login : "Unknown User"}
+                                        </a>
                                     </div>
-                                    <div className="preview-footer-time">
-                                        <strong>Created at:</strong> {formatDateTime(data.creationTime)}
+                                    <div className="preview-data">
+                                        {previewData(data.words || data.text)}
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
+                                    <div className="train-list-item-footer">
+                                        <div>
+                                            <strong>Type:</strong> {fromTrainModeString(data.type)}
+                                        </div>
+                                        <div className="preview-footer-time">
+                                            <strong>Created at:</strong> {formatDateTime(data.creationTime)}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <button
+                                className={"start-train-button item-start"}
+                                onClick={() => startTrain(data.id, data.type)}
+                            >
+                                Start train
+                            </button>
+                        </>
                     ) : (
                         <div className="loading-center">No data available</div>
                     )}
